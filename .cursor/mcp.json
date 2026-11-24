@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "workiva": {
+      "command": "uv",
+      "args": ["run", "--directory", "${workspaceFolder}", "workiva-mcp"],
+      "envFile": "${workspaceFolder}/.env"
+    }
+  }
+}

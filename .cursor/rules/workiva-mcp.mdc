@@ -1,0 +1,34 @@
+---
+description: Workiva MCP server project rules
+alwaysApply: true
+---
+# Workiva MCP server: standing rules
+
+## What we're building
+A Python MCP server that exposes the Workiva Public API as tools an AI agent
+can call.
+
+## Safety
+- Secrets come from .env only (WORKIVA_CLIENT_ID, WORKIVA_CLIENT_SECRET,
+  WORKIVA_WORKSPACE_ID). Never print, log, or commit secret values.
+- Every write tool refuses to run unless the target workspace equals
+  WORKIVA_WORKSPACE_ID (the sandbox lock).
+- Never delete anything you didn't create in this session. Record every
+  created ID in a run ledger.
+- Fake data only. No customer files.
+
+## How to work
+- Read the official Public API docs page for an endpoint before calling it.
+  Don't guess routes or payloads.
+- One step per task. Stop and report when the step's check passes or fails.
+- After every write, read the artifact back and compare. A 200/202 response
+  is not proof.
+- On a timeout or network error, probe the artifact first to see if the write
+  landed, then retry. Never blind-retry.
+- Check the artifact, not the log, before re-running a partially applied
+  step.
+- When you learn a platform limit, add it to CAPABILITIES.md with the date
+  and how you proved it.
+- Every tool is listed in TOOLS.md (name, one line, status: read/write,
+  tested Y/N).
+- Generated test output goes in outputs/ (gitignored), never committed.
